@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <title>MovieBinge</title>
+</head>
+<body>
+    <div class="navbar">
+            <div class="sitename">
+            <a href="mainpage.html">
+                <h3>Snap Review</h3>
+            </a>
+            </div>
+        <div id="infosearch">
+            <div>
+                <a href="mainpage.html"><i class="fa-solid fa-house" style="color: #FFD43B;cursor: pointer;font-size: 20px;"></i></a> 
+             </div>
+           <a href="soonlaunch.html">
+                <button class="shadow__btn tune">
+                    NewRelease Alert
+                </button>
+           </a> 
+           <a href="trendy.html">
+                <button class="shadow__btn tune">
+                    Trendy
+                </button>
+           </a>
+            <div id="searchbox">
+                <input type="text" placeholder="eg.Batman" id="moviename">
+                <div id="search">
+                    <img src="image/search.svg">
+                </div>
+            </div>
+            
+        </div>   
+    </div>
+    <div class="card">
+        <div id="check">
+            <marquee behavior="alternate" direction="right">Please note that the movie name is spelling-sensitive. Kindly double-check the spelling to ensure accuracy</marquee>
+        </div>
+        <div class="card-info">
+
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/all.min.js"></script>
+    <script>
+    
+// ================================variable======================================
+        var response="";
+        var moviedetails=[];
+        var delid="";
+        var numberpart="";
+
+// ===============================search=========================================
+$("#search").click(function(){
+    moviename=$("#moviename").val();
+    $("#moviename").val("");
+    if(moviename!=""){
+        getMovieInfoByTitle(moviename);
+        $(".navbar").css("position","relative");
+    }
+    else{
+            alert("Opps!The movie name is not entered")
+    }
+})
+
+
+// ============================api to fetch data=================================
+const apiKey = '9aeb24c9';
+const baseUrl = 'http://www.omdbapi.com/';
+
+    async function getMovieInfoByTitle(title) {
+    const url = `${baseUrl}?t=${encodeURIComponent(title)}&apikey=${apiKey}`;
+    let data;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data.Response === 'False') {
+        alert("Dear User,\n\nWe're enhancing our movie database, and some details may be temporarily unavailable. We apologize for any inconvenience and appreciate your patience. If you have any requests or need assistance, feel free to reach out.\n\nThank you for your understanding.");
+        }
+        else {
+                if( moviedetails.length===0)
+                {
+                    moviedetails.push(data);
+                                var contentArray = moviedetails.map(function(movie,i){
+                                return `
+                                <div class="content" id="y${i}">
+                                    <div class="back">
+                                        <div class="back-content">
+                                        <img src="${movie.Poster}"  style="width: 100%;object-fit: cover;object-position: center;" fill="#ffffff">
+                                        </img>
+                                        </div>
+                                    </div>
+                                    <div class="front">
+                                        
+                                        <div class="img">
+                                        <div class="circle">
+                                        </div>
+                                        <div class="circle" id="right">
+                                        </div>
+                                        <div class="circle" id="bottom">
+                                        </div>
+                                        </div>
+                                
+                                        <div class="front-content">
+                                        <small class="badge delete" id="a${i}">close</small>
+                                        <div class="description">
+                                            <div class="title">
+                                                <p class="title">
+                                                    <strong>${movie.Title}</strong>
+                                                    <strong>Country of Origin : ${movie.Country}</strong>
+                                                    <strong>Actor : ${movie.Actors}</strong>
+                                                    <strong>Director : ${movie.Director}</strong>
+                                                    <strong>Release Date : ${movie.Released}</strong>
+                                                    <strong>Genre : ${movie.Genre}</strong>
+                                                    <strong>Screening Time : ${movie.Runtime}</strong>
+                                                    <strong>Box-Office Collection : ${movie.BoxOffice}</strong>
+                                                </p>
+                                            </div>
+                                            <p class="card-footer">
+                                                ${movie.Plot}
+                                            </p>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>`
+                                });
+                                
+                                $(".card-info").empty();
+                                var content = contentArray.reverse();
+                                $(".card-info").append(content);         
+                }
+                else{
+                        if (!moviedetails.some((movie) => movie.imdbID === data.imdbID)) {
+                           
+                                moviedetails.push(data);
+                                var contentArray = moviedetails.map(function(movie,i) {
+                                    return `
+                                <div class="content">
+                                    <div class="back">
+                                        <div class="back-content">
+                                        <img src="${movie.Poster}"  style="width: 100%;" fill="#ffffff">
+                                        </img>
+                                        </div>
+                                    </div>
+                                    <div class="front">
+                                        
+                                        <div class="img">
+                                        <div class="circle">
+                                        </div>
+                                        <div class="circle" id="right">
+                                        </div>
+                                        <div class="circle" id="bottom">
+                                        </div>
+                                        </div>
+                                
+                                        <div class="front-content">
+                                        <small class="badge  delete" id="a${i}">close</small>
+                                        <div class="description">
+                                            <div class="title">
+                                                <p class="title">
+                                                    <strong>${movie.Title}</strong>
+                                                    <strong>Country of Origin : ${movie.Country}</strong>
+                                                    <strong>Actor : ${movie.Actors}</strong>
+                                                    <strong>Director : ${movie.Director}</strong>
+                                                    <strong>Release Date : ${movie.Released}</strong>
+                                                    <strong>Genre : ${movie.Genre}</strong>
+                                                    <strong>Screening Time : ${movie.Runtime}</strong>
+                                                    <strong>Box-Office Collection : ${movie.BoxOffice}</strong>
+                                                </p>
+                                            </div>
+                                            <p class="card-footer">
+                                                ${movie.Plot}
+                                            </p>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>`
+                                });
+                                
+                                $(".card-info").empty();
+                                var content = contentArray.reverse();
+                                $(".card-info").append(content);
+                            }
+                            else{
+                                alert(`Thank you for your search! The movie you're looking for is already in our list. Feel free to explore more movies or let us know if there's anything else we can assist you with. Enjoy your movie time!`);
+                            } 
+                    
+                }
+                if(moviedetails.length === 3){
+                    $(".card-info").css("justify-content","space-evenly");
+                }    
+                  
+            }
+        } catch (error) {
+                console.error('Request failed:', error);
+            }
+        }
+        $(document).on("click",".delete",function(){
+            delid = $(this).attr("id");
+            console.log(delid);
+            numberpart=delid.replace(/\D/g,"");
+            moviedetails.splice(numberpart, 1);
+            moviedetails=moviedetails.filter(Boolean);
+            $(this).closest('.content').remove();
+        })
+            $(".card").on("mouseenter", ".content", function() {
+                $(this).css('transform', 'rotateY(180deg)');
+                $(this).css('transition', 'transform 0.5s ease');                        
+            });
+
+            $(".card").on("mouseleave", ".content", function() {
+            $(this).css('transform', 'rotateY(0deg)');
+            $(this).css('transition', 'transform 0.5s ease');
+            });
+    </script>
+</body>
+</html>

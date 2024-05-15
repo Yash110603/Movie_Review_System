@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Londrina+Outline&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/all.min.css">
+    <title>Review Page</title>
+</head>
+<body>
+    <div class="navbar">
+        <div class="sitename">
+            <a href="mainpage.html">
+                <h3 class="snap1">Snap Review</h3>
+            </a>
+        </div>
+        <div id="infosearch1">
+            <a href="soonlaunch.html">
+                    <button class="shadow__btn tune">
+                        NewRelease Alert
+                    </button>
+            </a> 
+            <a href="trendy.html">
+                <button class="shadow__btn tune">
+                    Trendy
+                </button>
+            </a>
+            <a href="moviebinge.html">
+                <button class="shadow__btn tune">
+                    Click Here and Search your Movie
+                </button>
+            </a>
+        </div>   
+    </div>
+    <div class="container">
+        <div class="container-right">
+            <div class="container-right-bottom">
+                <div class="marquee-content1">
+                    <div class="crbl" style="height: 45vh;">
+                        <img src="image/bg12.jpg" class="crbr">
+                    </div>
+                    <div class="crbl">
+                        <img src="image/bg5.jpg" class="crbr">
+                    </div>
+                </div>
+            </div>
+            <div class="container-right-bottom1" id="myMarquee">
+                <div class="marquee-content" >
+                    <div class="containerrighttopleft">
+                        <div class="aboveimage1t2">
+                        </div>
+                        <div class="heading">
+                            <h1>About Us</h1>
+                        </div>
+                   </div>
+                    <div id="headingcontent">
+                        <div class="headingcontent2 ">
+                            <span>📸 Snap and Go: Our reviews are designed to be as dynamic as the movies themselves. In a snap, get the lowdown on the latest releases and timeless classics.</span>
+                        </div> <br>
+                        <div class="headingcontent2">
+                            <span>🌟 Star-Powered Ratings: Our star-powered rating system provides a visual snapshot of a film's overall appeal. Whether you're a casual viewer or a seasoned cinephile.</span>
+                        </div> <br>
+                        <div class="headingcontent2">
+                            <span>📚 Snap Insights: Dive deeper into the art of filmmaking with Snap Insights. Our articles provide brief yet informative explorations of film techniques, directorial styles, and industry trends.</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="container-right-top">
+                <div class="crtl">
+                    <img src="image/bg8.jpg" class="crtr">
+                </div>
+                <div id="down-arrow">
+                    <i class="fa-solid fa-angle-down" style="color: #000000; font-size: 30px;" id="down"></i>
+                    <i class="fa-solid fa-angle-up" style="color: #000000;font-size: 30px;" id="up"></i>
+                </div>
+            </div>
+            <div class="aboveimages1"> 
+                <div class="aboveimage1t3 aboveimage1tcom">
+                </div>
+            </div>
+        </div>
+         <div class="container-left">
+            <div class="clt-1 clt">
+            </div>
+            <div class="clt-2 clt">
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.js"></script>
+    <script src="js/all.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+        // =========================variables=============================
+        var count=0;
+        $("#up").hide();
+        
+        
+        $("document").ready(function(){
+            $(".container-right-bottom").css("display", "none");
+            setTimeout(marqueemove, 0);
+            setTimeout(marqueeremv, 2300);
+        });
+            $("#down-arrow").click(function(){
+                if(count==0){
+                    $("#down").show();
+                    $("#up").hide();
+                    twoimages();
+                    count=1;
+                }
+                else if(count==1){
+                    $("#up").show();
+                    $("#down").hide();
+                    reverseinfo();
+                    count=0;
+                }
+            })
+            function twoimages(){
+                setTimeout(displayremv1,2300);
+                setTimeout(display,2300 );
+                setTimeout(displayrun,2300 );
+                setTimeout(displaystop,4700);
+                setTimeout(marqueemove, 0);
+                setTimeout(marqueeremv, 2200);
+            }
+            function reverseinfo(){
+                setTimeout(displayrun, 0);
+                setTimeout(displayblock, 2200);
+                setTimeout(displayshow, 2200);
+                setTimeout(marqueemove, 2200);
+                setTimeout(marqueeremv, 4700);
+            }
+            $(".aboveimage1t2").mouseenter(function(){
+                $(".aboveimage1t2").addClass("active");
+            });
+
+            function marqueeremv(){
+                $('.marquee-content').css('animation-play-state', 'paused');
+            }
+
+            function marqueemove(){
+                $('.marquee-content').css('animation-play-state', 'running');
+            }
+
+            function displayremv1(){
+                $("#myMarquee").css("display", "none");
+                $(".aboveimage1t3").css("display", "none");
+            }
+
+        function display(){
+            $(".container-right-bottom").css("display", "flex");
+        }
+
+        function displayblock(){
+            $(".container-right-bottom").css("display", "none");
+        }
+
+        function displayshow(){
+            $("#myMarquee").css("display", "flex");
+            $(".aboveimage1t3").css("display", "flex");
+        }
+
+        function displaystop(){
+            $('.marquee-content1').css('animation-play-state', 'paused');
+        }
+
+        function displayrun(){ 
+            $('.marquee-content1').css('animation-play-state', 'running');
+        }
+
+
+                
+                    
+
+    </script>
+</body>
+</html>
